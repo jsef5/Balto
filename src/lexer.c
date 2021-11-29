@@ -69,11 +69,11 @@ token_t* lexer_parse_number(lexer_t* lexer){
 token_t* lexer_next(lexer_t* lexer){
     while(lexer->c != '\0') {
         lexer_skip_whitespace(lexer);
-        if(isalpha(lexer->c)) return lexer_advance_with(lexer, lexer_parse_id(lexer));
-        if(isdigit(lexer->c)) return lexer_advance_with(lexer, lexer_parse_number(lexer));
+        if(isalpha(lexer->c)) return lexer_parse_id(lexer);
+        if(isdigit(lexer->c)) return lexer_parse_number(lexer);
         switch(lexer->c) {
             case '-': {
-                if(lexer_peek(lexer, 1) == '>') return lexer_advance_with(lexer, init_token("->", TOKEN_RARROW));
+                if(lexer_peek(lexer, 1) == '>') return lexer_advance_with(lexer, lexer_advance_with(lexer, init_token("->", TOKEN_RARROW)));
             } break;
             case '=': return lexer_advance_with(lexer, init_token("=", TOKEN_EQ));
             case '(': return lexer_advance_current(lexer, TOKEN_LPAREN);

@@ -5,6 +5,7 @@ flags = -g -Wall -lm -fPIC
 
 $(exec): $(objs)
 	gcc $(objs) $(flags) -o $(exec)
+	make clean
 %.o: %.c include/%.h
 	gcc -c $(flags) $< -o $@
 
